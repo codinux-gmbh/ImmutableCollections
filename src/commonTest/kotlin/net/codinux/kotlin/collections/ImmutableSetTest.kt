@@ -84,6 +84,24 @@ class ImmutableSetTest {
         result.shouldHaveSize(2)
     }
 
+    @Test
+    fun immutableSetOf_Iterable() {
+        val source: Iterable<String> = ArrayDeque(setOf("one", "two"))
+
+        val result = immutableSetOf(source)
+
+        result.shouldBeInstanceOf<ImmutableSet<String>>()
+        result.shouldHaveSize(2)
+    }
+
+    @Test
+    fun immutableSetOf_Vararg() {
+        val result = immutableSetOf("one", "two")
+
+        result.shouldBeInstanceOf<ImmutableSet<String>>()
+        result.shouldHaveSize(2)
+    }
+
 
     @Test
     fun getSize() {

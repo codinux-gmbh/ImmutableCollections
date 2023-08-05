@@ -84,6 +84,24 @@ class ImmutableListTest {
         result.shouldHaveSize(2)
     }
 
+    @Test
+    fun immutableListOf_Iterable() {
+        val source: Iterable<String> = ArrayDeque(setOf("one", "two"))
+
+        val result = immutableListOf(source)
+
+        result.shouldBeInstanceOf<ImmutableList<String>>()
+        result.shouldHaveSize(2)
+    }
+
+    @Test
+    fun immutableListOf_Vararg() {
+        val result = immutableListOf("one", "two")
+
+        result.shouldBeInstanceOf<ImmutableList<String>>()
+        result.shouldHaveSize(2)
+    }
+
 
     @Test
     fun getSize() {

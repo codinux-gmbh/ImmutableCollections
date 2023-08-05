@@ -90,6 +90,24 @@ class ImmutableMapTest {
         result.shouldHaveSize(2)
     }
 
+    @Test
+    fun immutableMapOf_Iterable() {
+        val source = mapOf("one" to "two")
+
+        val result = immutableMapOf(source)
+
+        result.shouldBeInstanceOf<ImmutableMap<String, String>>()
+        result.shouldHaveSize(1)
+    }
+
+    @Test
+    fun immutableMapOf_Vararg() {
+        val result = immutableMapOf("one" to "two", "three" to "four")
+
+        result.shouldBeInstanceOf<ImmutableMap<String, String>>()
+        result.shouldHaveSize(2)
+    }
+
 
     @Test
     fun getSize() {
