@@ -19,6 +19,7 @@ kotlin {
             useJUnitPlatform()
         }
     }
+
     js(BOTH) {
         browser {
             commonWebpackConfig {
@@ -28,6 +29,7 @@ kotlin {
             }
         }
     }
+
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
     val nativeTarget = when {
@@ -39,10 +41,14 @@ kotlin {
 
     
     sourceSets {
+        val kotestVersion: String by project
+
         val commonMain by getting
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+
+                implementation("io.kotest:kotest-assertions-core:$kotestVersion")
             }
         }
 
