@@ -62,3 +62,12 @@ kotlin {
         val nativeTest by getting
     }
 }
+
+
+ext["projectDescription"] = "Immutable Collections implementations for Kotlin (Multiplatform) like ImmutableList, ImmutableMap, ..."
+ext["sourceCodeRepositoryBaseUrl"] = "github.com/codinux-gmbh/ImmutableCollections"
+
+val publishingScript = File(File(project.gradle.gradleUserHomeDir, "scripts"), "publish-codinux.gradle.kts")
+if (publishingScript.exists()) {
+    apply(from = publishingScript)
+}
