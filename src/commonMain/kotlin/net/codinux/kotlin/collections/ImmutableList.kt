@@ -29,4 +29,8 @@ class ImmutableList<E>(private val wrapped: List<E>) : List<E> {
 
     override fun toString() = wrapped.toString()
 
+
+    // adds a class method for languages that don't support extension methods like Java, ...
+    fun toMutableList(): MutableList<E> = (this as Collection<E>).toMutableList()
+
 }

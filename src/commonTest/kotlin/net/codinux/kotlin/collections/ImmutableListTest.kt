@@ -1,5 +1,6 @@
 package net.codinux.kotlin.collections
 
+import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -9,6 +10,27 @@ import net.codinux.kotlin.collections.CollectionsTestData.forAllElements
 import kotlin.test.Test
 
 class ImmutableListTest {
+
+    @Test
+    fun isImmutable() {
+        val underTest = ImmutableList("one", "two")
+
+        shouldThrowAny {
+            underTest as MutableList<String>
+        }
+    }
+
+    @Test
+    fun toMutableList() {
+        val underTest = ImmutableList("one", "two")
+
+        val result = underTest.toMutableList()
+        result.add("three")
+
+        result.shouldHaveSize(3)
+        underTest.shouldHaveSize(2)
+    }
+
 
     @Test
     fun getSize() {

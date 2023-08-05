@@ -24,4 +24,8 @@ class ImmutableMap<K, V>(private val wrapped: Map<K, V>) : Map<K, V> {
 
     override fun toString() = wrapped.toString()
 
+
+    // adds a class method for languages that don't support extension methods like Java, ...
+    fun toMutableMap(): MutableMap<K, V> = (this as Map<K, V>).toMutableMap()
+
 }

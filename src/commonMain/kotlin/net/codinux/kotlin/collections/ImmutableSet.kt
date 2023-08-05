@@ -17,4 +17,8 @@ class ImmutableSet<E>(private val wrapped: Set<E>) : Set<E> {
 
     override fun toString() = wrapped.toString()
 
+
+    // adds a class method for languages that don't support extension methods like Java, ...
+    fun toMutableSet(): MutableSet<E> = (this as Set<E>).toMutableSet()
+
 }

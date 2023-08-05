@@ -1,5 +1,6 @@
 package net.codinux.kotlin.collections
 
+import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.maps.shouldHaveSize
@@ -10,6 +11,27 @@ import net.codinux.kotlin.collections.CollectionsTestData.forAllElements
 import kotlin.test.Test
 
 class ImmutableMapTest {
+
+    @Test
+    fun isImmutable() {
+        val underTest = ImmutableMap("one" to "two")
+
+        shouldThrowAny {
+            underTest as MutableMap<String, String>
+        }
+    }
+
+    @Test
+    fun toMutableMap() {
+        val underTest = ImmutableMap("one" to "two")
+
+        val result = underTest.toMutableMap()
+        result.put("three", "four")
+
+        result.shouldHaveSize(2)
+        underTest.shouldHaveSize(1)
+    }
+
 
     @Test
     fun getSize() {
