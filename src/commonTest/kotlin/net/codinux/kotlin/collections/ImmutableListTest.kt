@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import net.codinux.kotlin.collections.CollectionsTestData.CountElements
 import net.codinux.kotlin.collections.CollectionsTestData.ListTestData
 import net.codinux.kotlin.collections.CollectionsTestData.forAllElements
@@ -71,6 +72,16 @@ class ImmutableListTest {
 
         source.shouldHaveSize(3)
         underTest.shouldHaveSize(2)
+    }
+
+    @Test
+    fun toImmutableList() {
+        val source: Iterable<String> = ArrayDeque(setOf("one", "two"))
+
+        val result = source.toImmutableList()
+
+        result.shouldBeInstanceOf<ImmutableList<String>>()
+        result.shouldHaveSize(2)
     }
 
 

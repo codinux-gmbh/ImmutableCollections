@@ -6,6 +6,7 @@ import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import net.codinux.kotlin.collections.CollectionsTestData.CountElements
 import net.codinux.kotlin.collections.CollectionsTestData.MapTestData
 import net.codinux.kotlin.collections.CollectionsTestData.forAllElements
@@ -59,6 +60,34 @@ class ImmutableMapTest {
 
         source.shouldHaveSize(2)
         underTest.shouldHaveSize(1)
+    }
+
+    @Test
+    fun toImmutableMap_Map() {
+        val source = mapOf("one" to "two")
+
+        val result = source.toImmutableMap()
+
+        result.shouldBeInstanceOf<ImmutableMap<String, String>>()
+        result.shouldHaveSize(1)
+    }
+
+    @Test
+    fun toImmutableMap_Pair() {
+        val source = "one" to "two"
+
+        val result = source.toImmutableMap()
+
+        result.shouldHaveSize(1)
+    }
+
+    @Test
+    fun toImmutableMap_IterableOfPairs() {
+        val source = listOf("one" to "two", "three" to "four")
+
+        val result = source.toImmutableMap()
+
+        result.shouldHaveSize(2)
     }
 
 
