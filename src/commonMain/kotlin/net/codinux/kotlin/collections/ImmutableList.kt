@@ -2,6 +2,8 @@ package net.codinux.kotlin.collections
 
 class ImmutableList<E>(elements: List<E>) : List<E> {
 
+    constructor(elements: Iterable<E>) : this(elements.toList())
+
     constructor(vararg elements: E) : this(elements.asList())
 
 

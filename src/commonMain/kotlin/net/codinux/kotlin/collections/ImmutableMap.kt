@@ -2,6 +2,8 @@ package net.codinux.kotlin.collections
 
 class ImmutableMap<K, V>(map: Map<K, V>) : Map<K, V> {
 
+    constructor(entries: Iterable<Pair<K, V>>) : this(*entries.toList().toTypedArray())
+
     constructor(vararg entries: Pair<K, V>) : this(entries.toMap())
 
 

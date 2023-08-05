@@ -21,7 +21,7 @@ class ImmutableSetTest {
     }
 
     @Test
-    fun toMutableList() {
+    fun toMutableSet() {
         val underTest = ImmutableSet("one", "two")
 
         val result = underTest.toMutableSet()
@@ -32,7 +32,35 @@ class ImmutableSetTest {
     }
 
     @Test
-    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableSet() {
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableSet_Iterable() {
+        val source = ArrayDeque(setOf("one", "two"))
+        val underTest = ImmutableSet(source as Iterable<String>)
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(2)
+
+        source.add("three")
+
+        source.shouldHaveSize(3)
+        underTest.shouldHaveSize(2)
+    }
+
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableSet_List() {
+        val source = mutableListOf("one", "two")
+        val underTest = ImmutableSet(source)
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(2)
+
+        source.add("three")
+
+        source.shouldHaveSize(3)
+        underTest.shouldHaveSize(2)
+    }
+
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableSet_Set() {
         val source = mutableSetOf("one", "two")
         val underTest = ImmutableSet(source)
 

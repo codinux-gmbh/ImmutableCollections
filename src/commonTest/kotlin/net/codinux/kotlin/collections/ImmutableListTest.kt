@@ -32,8 +32,36 @@ class ImmutableListTest {
     }
 
     @Test
-    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableList() {
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableList_Iterable() {
+        val source = ArrayDeque(setOf("one", "two"))
+        val underTest = ImmutableList(source as Iterable<String>)
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(2)
+
+        source.add("three")
+
+        source.shouldHaveSize(3)
+        underTest.shouldHaveSize(2)
+    }
+
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableList_List() {
         val source = mutableListOf("one", "two")
+        val underTest = ImmutableList(source)
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(2)
+
+        source.add("three")
+
+        source.shouldHaveSize(3)
+        underTest.shouldHaveSize(2)
+    }
+
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableList_Set() {
+        val source = mutableSetOf("one", "two")
         val underTest = ImmutableList(source)
 
         source.shouldHaveSize(2)

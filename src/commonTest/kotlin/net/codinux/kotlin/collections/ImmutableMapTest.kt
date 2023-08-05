@@ -3,6 +3,7 @@ package net.codinux.kotlin.collections
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import net.codinux.kotlin.collections.CollectionsTestData.CountElements
@@ -33,7 +34,21 @@ class ImmutableMapTest {
     }
 
     @Test
-    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableMap() {
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableMap_IterableOfPairs() {
+        val source = mutableListOf("one" to "two")
+        val underTest = ImmutableMap(source)
+
+        source.shouldHaveSize(1)
+        underTest.shouldHaveSize(1)
+
+        source.add("three" to "four")
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(1)
+    }
+
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableMap_Map() {
         val source = mutableMapOf("one" to "two")
         val underTest = ImmutableMap(source)
 

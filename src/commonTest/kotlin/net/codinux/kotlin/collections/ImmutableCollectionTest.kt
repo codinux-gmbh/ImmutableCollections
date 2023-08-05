@@ -21,7 +21,7 @@ class ImmutableCollectionTest {
     }
 
     @Test
-    fun toMutableList() {
+    fun toMutableCollection() {
         val underTest = ImmutableCollection("one", "two")
 
         val result = underTest.toMutableCollection()
@@ -32,8 +32,36 @@ class ImmutableCollectionTest {
     }
 
     @Test
-    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableCollection() {
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableCollection_Iterable() {
+        val source = ArrayDeque(setOf("one", "two"))
+        val underTest = ImmutableCollection(source as Iterable<String>)
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(2)
+
+        source.add("three")
+
+        source.shouldHaveSize(3)
+        underTest.shouldHaveSize(2)
+    }
+
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableCollection_List() {
         val source = mutableListOf("one", "two")
+        val underTest = ImmutableCollection(source)
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(2)
+
+        source.add("three")
+
+        source.shouldHaveSize(3)
+        underTest.shouldHaveSize(2)
+    }
+
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableCollection_Set() {
+        val source = mutableSetOf("one", "two")
         val underTest = ImmutableCollection(source)
 
         source.shouldHaveSize(2)

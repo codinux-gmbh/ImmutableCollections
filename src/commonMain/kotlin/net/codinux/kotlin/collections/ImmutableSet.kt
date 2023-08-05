@@ -2,6 +2,8 @@ package net.codinux.kotlin.collections
 
 class ImmutableSet<E>(elements: Set<E>) : Set<E> {
 
+    constructor(elements: Iterable<E>) : this(elements.toSet())
+
     constructor(vararg elements: E) : this(elements.toSet())
 
 
