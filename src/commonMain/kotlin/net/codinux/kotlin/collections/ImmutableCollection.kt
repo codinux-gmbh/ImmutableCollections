@@ -1,21 +1,24 @@
 package net.codinux.kotlin.collections
 
-class ImmutableCollection<E>(private val wrapped: Collection<E>) : Collection<E> {
+class ImmutableCollection<E>(elements: Collection<E>) : Collection<E> {
 
     constructor(vararg elements: E) : this(elements.asList())
 
 
-    override val size = wrapped.size
+    private val source: List<E> = ArrayList(elements) // make a copy so that changes to source don't change state of this instance
 
-    override fun isEmpty() = wrapped.isEmpty()
 
-    override fun contains(element: E) = wrapped.contains(element)
+    override val size = source.size
 
-    override fun containsAll(elements: Collection<E>) = wrapped.containsAll(elements)
+    override fun isEmpty() = source.isEmpty()
 
-    override fun iterator() = wrapped.iterator()
+    override fun contains(element: E) = source.contains(element)
 
-    override fun toString() = wrapped.toString()
+    override fun containsAll(elements: Collection<E>) = source.containsAll(elements)
+
+    override fun iterator() = source.iterator()
+
+    override fun toString() = source.toString()
 
 
     // adds a class method for languages that don't support extension methods like Java, ...

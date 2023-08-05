@@ -31,6 +31,20 @@ class ImmutableSetTest {
         underTest.shouldHaveSize(2)
     }
 
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableSet() {
+        val source = mutableSetOf("one", "two")
+        val underTest = ImmutableSet(source)
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(2)
+
+        source.add("three")
+
+        source.shouldHaveSize(3)
+        underTest.shouldHaveSize(2)
+    }
+
 
     @Test
     fun getSize() {

@@ -31,6 +31,20 @@ class ImmutableCollectionTest {
         underTest.shouldHaveSize(2)
     }
 
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableCollection() {
+        val source = mutableListOf("one", "two")
+        val underTest = ImmutableCollection(source)
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(2)
+
+        source.add("three")
+
+        source.shouldHaveSize(3)
+        underTest.shouldHaveSize(2)
+    }
+
 
     @Test
     fun getSize() {

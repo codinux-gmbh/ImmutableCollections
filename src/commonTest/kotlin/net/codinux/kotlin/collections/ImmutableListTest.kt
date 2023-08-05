@@ -31,6 +31,20 @@ class ImmutableListTest {
         underTest.shouldHaveSize(2)
     }
 
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableList() {
+        val source = mutableListOf("one", "two")
+        val underTest = ImmutableList(source)
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(2)
+
+        source.add("three")
+
+        source.shouldHaveSize(3)
+        underTest.shouldHaveSize(2)
+    }
+
 
     @Test
     fun getSize() {

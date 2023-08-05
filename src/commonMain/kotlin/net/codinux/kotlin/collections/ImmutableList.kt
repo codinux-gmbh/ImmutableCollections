@@ -1,33 +1,36 @@
 package net.codinux.kotlin.collections
 
-class ImmutableList<E>(private val wrapped: List<E>) : List<E> {
+class ImmutableList<E>(elements: List<E>) : List<E> {
 
     constructor(vararg elements: E) : this(elements.asList())
 
 
-    override val size = wrapped.size
+    private val source: List<E> = ArrayList(elements) // make a copy so that changes to source don't change state of this instance
 
-    override fun isEmpty() = wrapped.isEmpty()
 
-    override fun get(index: Int) = wrapped.get(index)
+    override val size = this.source.size
 
-    override fun indexOf(element: E) = wrapped.indexOf(element)
+    override fun isEmpty() = source.isEmpty()
 
-    override fun lastIndexOf(element: E) = wrapped.lastIndexOf(element)
+    override fun get(index: Int) = source.get(index)
 
-    override fun contains(element: E) = wrapped.contains(element)
+    override fun indexOf(element: E) = source.indexOf(element)
 
-    override fun containsAll(elements: Collection<E>) = wrapped.containsAll(elements)
+    override fun lastIndexOf(element: E) = source.lastIndexOf(element)
 
-    override fun iterator() = wrapped.iterator()
+    override fun contains(element: E) = source.contains(element)
 
-    override fun listIterator() = wrapped.listIterator()
+    override fun containsAll(elements: Collection<E>) = source.containsAll(elements)
 
-    override fun listIterator(index: Int) = wrapped.listIterator(index)
+    override fun iterator() = source.iterator()
 
-    override fun subList(fromIndex: Int, toIndex: Int) = wrapped.subList(fromIndex, toIndex)
+    override fun listIterator() = source.listIterator()
 
-    override fun toString() = wrapped.toString()
+    override fun listIterator(index: Int) = source.listIterator(index)
+
+    override fun subList(fromIndex: Int, toIndex: Int) = source.subList(fromIndex, toIndex)
+
+    override fun toString() = source.toString()
 
 
     // adds a class method for languages that don't support extension methods like Java, ...

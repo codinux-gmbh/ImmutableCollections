@@ -32,6 +32,20 @@ class ImmutableMapTest {
         underTest.shouldHaveSize(1)
     }
 
+    @Test
+    fun changesToUnderlyingSourceDoesNotChangeStateOfImmutableMap() {
+        val source = mutableMapOf("one" to "two")
+        val underTest = ImmutableMap(source)
+
+        source.shouldHaveSize(1)
+        underTest.shouldHaveSize(1)
+
+        source.put("three", "four")
+
+        source.shouldHaveSize(2)
+        underTest.shouldHaveSize(1)
+    }
+
 
     @Test
     fun getSize() {
