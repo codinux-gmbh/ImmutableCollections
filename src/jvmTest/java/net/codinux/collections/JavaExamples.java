@@ -1,4 +1,4 @@
-package net.codinux.kotlin.collections;
+package net.codinux.collections;
 
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.codinux.kotlin.collections.ImmutableCollectionExtensionKt.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -16,7 +15,7 @@ public class JavaExamples {
     @Test
     public void immutableList() {
         List<String> listViaConstructor = new ImmutableList<>("foo", "bar");
-        List<String> listViaGlobalMethod = immutableListOf("foo", "bar");
+        List<String> listViaGlobalMethod = net.codinux.collections.ImmutableCollectionExtensionKt.immutableListOf("foo", "bar");
 
         assertEquals(2, listViaConstructor.size());
 
@@ -27,7 +26,7 @@ public class JavaExamples {
     @Test
     public void immutableMap() {
         Map<String, String> mapViaConstructor = new ImmutableMap<>(Collections.singletonMap("foo", "bar")); // TODO: why does the vararg Pair<K, V> constructor not work her?
-        Map<String, String> mapViaGlobalMethod = immutableMapOf(Collections.singletonMap("foo", "bar"));
+        Map<String, String> mapViaGlobalMethod = net.codinux.collections.ImmutableCollectionExtensionKt.immutableMapOf(Collections.singletonMap("foo", "bar"));
 
         assertEquals(1, mapViaConstructor.size());
 
@@ -38,7 +37,7 @@ public class JavaExamples {
     @Test
     public void immutableSet() {
         Set<String> setViaConstructor = new ImmutableSet<>("foo", "bar");
-        Set<String> setViaGlobalMethod = immutableSetOf("foo", "bar");
+        Set<String> setViaGlobalMethod = net.codinux.collections.ImmutableCollectionExtensionKt.immutableSetOf("foo", "bar");
 
         assertEquals(2, setViaConstructor.size());
 

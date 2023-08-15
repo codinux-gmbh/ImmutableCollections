@@ -2,7 +2,7 @@ plugins {
     kotlin("multiplatform") version "1.8.22"
 }
 
-group = "net.codinux.kotlin"
+group = "net.codinux.collections"
 version = "1.0.0-SNAPSHOT"
 
 repositories {

@@ -1,4 +1,4 @@
-package net.codinux.kotlin.collections
+package net.codinux.collections
 
 
 fun <T> Iterable<T>.toImmutableList() = ImmutableList(this)

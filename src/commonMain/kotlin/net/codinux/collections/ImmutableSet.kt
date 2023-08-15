@@ -1,4 +1,4 @@
-package net.codinux.kotlin.collections
+package net.codinux.collections
 
 class ImmutableSet<E>(elements: Set<E>) : Set<E> {
 

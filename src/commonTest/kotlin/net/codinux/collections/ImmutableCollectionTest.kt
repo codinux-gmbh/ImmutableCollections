@@ -1,12 +1,12 @@
-package net.codinux.kotlin.collections
+package net.codinux.collections
 
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import net.codinux.kotlin.collections.CollectionsTestData.CountElements
-import net.codinux.kotlin.collections.CollectionsTestData.SetTestData
-import net.codinux.kotlin.collections.CollectionsTestData.forAllElements
+import net.codinux.collections.CollectionsTestData.CountElements
+import net.codinux.collections.CollectionsTestData.SetTestData
+import net.codinux.collections.CollectionsTestData.forAllElements
 import kotlin.test.Test
 
 class ImmutableCollectionTest {

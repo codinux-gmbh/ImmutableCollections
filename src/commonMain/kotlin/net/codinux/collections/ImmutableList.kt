@@ -1,4 +1,4 @@
-package net.codinux.kotlin.collections
+package net.codinux.collections
 
 class ImmutableList<E>(elements: List<E>) : List<E> {
 

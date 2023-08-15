@@ -1,4 +1,4 @@
-package net.codinux.kotlin.collections
+package net.codinux.collections
 
 class ImmutableMap<K, V>(map: Map<K, V>) : Map<K, V> {
 

@@ -1,4 +1,4 @@
-package net.codinux.kotlin.collections
+package net.codinux.collections
 
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
