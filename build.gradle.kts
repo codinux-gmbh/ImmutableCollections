@@ -10,11 +10,13 @@ repositories {
 }
 
 kotlin {
+    // Enable the default target hierarchy:
+    targetHierarchy.default()
+
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
-        }
+        jvmToolchain(8)
         withJava()
+
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
         }
@@ -28,16 +30,24 @@ kotlin {
                 }
             }
         }
+
+        nodejs()
     }
 
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-    }
+//    wasm() // not supported by kotest
+
+
+    linuxX64()
+    mingwX64()
+
+    ios()
+    iosSimulatorArm64()
+    macosX64()
+    macosArm64()
+    watchos()
+    watchosSimulatorArm64()
+    tvos()
+    tvosSimulatorArm64()
 
     
     sourceSets {
