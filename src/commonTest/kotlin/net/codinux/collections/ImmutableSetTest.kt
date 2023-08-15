@@ -1,14 +1,9 @@
 package net.codinux.collections
 
-import io.kotest.assertions.throwables.shouldThrowAny
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeInstanceOf
 import net.codinux.collections.CollectionsTestData.CountElements
 import net.codinux.collections.CollectionsTestData.SetTestData
 import net.codinux.collections.CollectionsTestData.forAllElements
-import kotlin.test.Test
+import kotlin.test.*
 
 class ImmutableSetTest {
 
@@ -16,7 +11,7 @@ class ImmutableSetTest {
     fun isImmutable() {
         val underTest = ImmutableSet("one", "two")
 
-        shouldThrowAny {
+        assertFails {
             underTest as MutableSet<String>
         }
     }
@@ -28,8 +23,8 @@ class ImmutableSetTest {
         val result = underTest.toMutableSet()
         result.add("three")
 
-        result.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, result.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -37,13 +32,13 @@ class ImmutableSetTest {
         val source = ArrayDeque(setOf("one", "two"))
         val underTest = ImmutableSet(source as Iterable<String>)
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(2)
+        assertEquals(2, source.size)
+        assertEquals(2, underTest.size)
 
         source.add("three")
 
-        source.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, source.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -51,13 +46,13 @@ class ImmutableSetTest {
         val source = mutableListOf("one", "two")
         val underTest = ImmutableSet(source)
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(2)
+        assertEquals(2, source.size)
+        assertEquals(2, underTest.size)
 
         source.add("three")
 
-        source.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, source.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -65,13 +60,13 @@ class ImmutableSetTest {
         val source = mutableSetOf("one", "two")
         val underTest = ImmutableSet(source)
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(2)
+        assertEquals(2, source.size)
+        assertEquals(2, underTest.size)
 
         source.add("three")
 
-        source.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, source.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -80,8 +75,8 @@ class ImmutableSetTest {
 
         val result = source.toImmutableSet()
 
-        result.shouldBeInstanceOf<ImmutableSet<String>>()
-        result.shouldHaveSize(2)
+        assertIs<ImmutableSet<String>>(result)
+        assertEquals(2, result.size)
     }
 
     @Test
@@ -90,16 +85,16 @@ class ImmutableSetTest {
 
         val result = immutableSetOf(source)
 
-        result.shouldBeInstanceOf<ImmutableSet<String>>()
-        result.shouldHaveSize(2)
+        assertIs<ImmutableSet<String>>(result)
+        assertEquals(2, result.size)
     }
 
     @Test
     fun immutableSetOf_Vararg() {
         val result = immutableSetOf("one", "two")
 
-        result.shouldBeInstanceOf<ImmutableSet<String>>()
-        result.shouldHaveSize(2)
+        assertIs<ImmutableSet<String>>(result)
+        assertEquals(2, result.size)
     }
 
 
@@ -107,21 +102,21 @@ class ImmutableSetTest {
     fun getSize() {
         val underTest = ImmutableSet(SetTestData)
 
-        underTest.shouldHaveSize(CountElements)
+        assertEquals(CountElements, underTest.size)
     }
 
     @Test
     fun isEmpty() {
         val underTest = ImmutableSet(emptySet<String>())
 
-        underTest.isEmpty().shouldBeTrue()
+        assertTrue(underTest.isEmpty())
     }
 
     @Test
     fun isNotEmpty() {
         val underTest = ImmutableSet(SetTestData)
 
-        underTest.isNotEmpty().shouldBeTrue()
+        assertTrue(underTest.isNotEmpty())
     }
 
     @Test
@@ -129,7 +124,7 @@ class ImmutableSetTest {
         val underTest = ImmutableSet(SetTestData)
 
         forAllElements { index ->
-            underTest.indexOf(index.toString()).shouldBe(index)
+            assertEquals(index, underTest.indexOf(index.toString()))
         }
     }
 
@@ -138,7 +133,7 @@ class ImmutableSetTest {
         val underTest = ImmutableSet(SetTestData)
 
         forAllElements { index ->
-            underTest.contains(index.toString()).shouldBeTrue()
+            assertTrue(underTest.contains(index.toString()))
         }
     }
 
@@ -146,7 +141,7 @@ class ImmutableSetTest {
     fun containsAll() {
         val underTest = ImmutableSet(SetTestData)
 
-        underTest.containsAll(SetTestData).shouldBeTrue()
+        assertTrue(underTest.containsAll(SetTestData))
     }
 
 }

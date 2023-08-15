@@ -23,6 +23,8 @@ kotlin {
     }
 
     js(BOTH) {
+        //binaries.executable()
+
         browser {
             commonWebpackConfig {
                 cssSupport {
@@ -34,7 +36,12 @@ kotlin {
         nodejs()
     }
 
-//    wasm() // not supported by kotest
+    wasm {
+        // To build distributions for and run tests on browser, Node.js or d8 use one:
+//        browser() // Browser and Node.js produce error: The top-level-await experiment is not enabled (set experiments.topLevelAwait: true to enabled it)
+//        nodejs()
+        d8()
+    }
 
 
     linuxX64()
@@ -51,14 +58,10 @@ kotlin {
 
     
     sourceSets {
-        val kotestVersion: String by project
-
         val commonMain by getting
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-
-                implementation("io.kotest:kotest-assertions-core:$kotestVersion")
             }
         }
 

@@ -1,14 +1,9 @@
 package net.codinux.collections
 
-import io.kotest.assertions.throwables.shouldThrowAny
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeInstanceOf
 import net.codinux.collections.CollectionsTestData.CountElements
 import net.codinux.collections.CollectionsTestData.ListTestData
 import net.codinux.collections.CollectionsTestData.forAllElements
-import kotlin.test.Test
+import kotlin.test.*
 
 class ImmutableListTest {
 
@@ -16,7 +11,7 @@ class ImmutableListTest {
     fun isImmutable() {
         val underTest = ImmutableList("one", "two")
 
-        shouldThrowAny {
+        assertFails {
             underTest as MutableList<String>
         }
     }
@@ -28,8 +23,8 @@ class ImmutableListTest {
         val result = underTest.toMutableList()
         result.add("three")
 
-        result.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, result.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -37,13 +32,13 @@ class ImmutableListTest {
         val source = ArrayDeque(setOf("one", "two"))
         val underTest = ImmutableList(source as Iterable<String>)
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(2)
+        assertEquals(2, source.size)
+        assertEquals(2, underTest.size)
 
         source.add("three")
 
-        source.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, source.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -51,13 +46,13 @@ class ImmutableListTest {
         val source = mutableListOf("one", "two")
         val underTest = ImmutableList(source)
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(2)
+        assertEquals(2, source.size)
+        assertEquals(2, underTest.size)
 
         source.add("three")
 
-        source.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, source.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -65,13 +60,13 @@ class ImmutableListTest {
         val source = mutableSetOf("one", "two")
         val underTest = ImmutableList(source)
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(2)
+        assertEquals(2, source.size)
+        assertEquals(2, underTest.size)
 
         source.add("three")
 
-        source.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, source.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -80,8 +75,8 @@ class ImmutableListTest {
 
         val result = source.toImmutableList()
 
-        result.shouldBeInstanceOf<ImmutableList<String>>()
-        result.shouldHaveSize(2)
+        assertIs<ImmutableList<String>>(result)
+        assertEquals(2, result.size)
     }
 
     @Test
@@ -90,16 +85,16 @@ class ImmutableListTest {
 
         val result = immutableListOf(source)
 
-        result.shouldBeInstanceOf<ImmutableList<String>>()
-        result.shouldHaveSize(2)
+        assertIs<ImmutableList<String>>(result)
+        assertEquals(2, result.size)
     }
 
     @Test
     fun immutableListOf_Vararg() {
         val result = immutableListOf("one", "two")
 
-        result.shouldBeInstanceOf<ImmutableList<String>>()
-        result.shouldHaveSize(2)
+        assertIs<ImmutableList<String>>(result)
+        assertEquals(2, result.size)
     }
 
 
@@ -107,21 +102,21 @@ class ImmutableListTest {
     fun getSize() {
         val underTest = ImmutableList(ListTestData)
 
-        underTest.shouldHaveSize(CountElements)
+        assertEquals(CountElements, underTest.size)
     }
 
     @Test
     fun isEmpty() {
         val underTest = ImmutableList(emptyList<String>())
 
-        underTest.isEmpty().shouldBeTrue()
+        assertTrue(underTest.isEmpty())
     }
 
     @Test
     fun isNotEmpty() {
         val underTest = ImmutableList(ListTestData)
 
-        underTest.isNotEmpty().shouldBeTrue()
+        assertTrue(underTest.isNotEmpty())
     }
 
     @Test
@@ -129,7 +124,7 @@ class ImmutableListTest {
         val underTest = ImmutableList(ListTestData)
 
         forAllElements { index ->
-            ListTestData[index].shouldBe(underTest[index])
+            assertEquals(underTest[index], ListTestData[index])
         }
     }
 
@@ -138,7 +133,7 @@ class ImmutableListTest {
         val underTest = ImmutableList(ListTestData)
 
         forAllElements { index ->
-            underTest.indexOf(ListTestData[index]).shouldBe(index)
+            assertEquals(index, underTest.indexOf(ListTestData[index]))
         }
     }
 
@@ -147,7 +142,7 @@ class ImmutableListTest {
         val underTest = ImmutableList(ListTestData)
 
         forAllElements { index ->
-            underTest.contains(ListTestData[index]).shouldBeTrue()
+            assertTrue(underTest.contains(ListTestData[index]))
         }
     }
 
@@ -155,7 +150,7 @@ class ImmutableListTest {
     fun containsAll() {
         val underTest = ImmutableList(ListTestData)
 
-        underTest.containsAll(ListTestData).shouldBeTrue()
+        assertTrue(underTest.containsAll(ListTestData))
     }
 
 }

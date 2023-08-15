@@ -1,13 +1,12 @@
 package net.codinux.collections
 
-import io.kotest.assertions.throwables.shouldThrowAny
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.shouldBe
 import net.codinux.collections.CollectionsTestData.CountElements
 import net.codinux.collections.CollectionsTestData.SetTestData
 import net.codinux.collections.CollectionsTestData.forAllElements
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFails
+import kotlin.test.assertTrue
 
 class ImmutableCollectionTest {
 
@@ -15,7 +14,7 @@ class ImmutableCollectionTest {
     fun isImmutable() {
         val underTest = ImmutableCollection("one", "two")
 
-        shouldThrowAny {
+        assertFails {
             underTest as MutableList<String>
         }
     }
@@ -27,8 +26,8 @@ class ImmutableCollectionTest {
         val result = underTest.toMutableCollection()
         result.add("three")
 
-        result.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, result.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -36,13 +35,13 @@ class ImmutableCollectionTest {
         val source = ArrayDeque(setOf("one", "two"))
         val underTest = ImmutableCollection(source as Iterable<String>)
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(2)
+        assertEquals(2, source.size)
+        assertEquals(2, underTest.size)
 
         source.add("three")
 
-        source.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, source.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -50,13 +49,13 @@ class ImmutableCollectionTest {
         val source = mutableListOf("one", "two")
         val underTest = ImmutableCollection(source)
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(2)
+        assertEquals(2, source.size)
+        assertEquals(2, underTest.size)
 
         source.add("three")
 
-        source.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, source.size)
+        assertEquals(2, underTest.size)
     }
 
     @Test
@@ -64,13 +63,13 @@ class ImmutableCollectionTest {
         val source = mutableSetOf("one", "two")
         val underTest = ImmutableCollection(source)
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(2)
+        assertEquals(2, source.size)
+        assertEquals(2, underTest.size)
 
         source.add("three")
 
-        source.shouldHaveSize(3)
-        underTest.shouldHaveSize(2)
+        assertEquals(3, source.size)
+        assertEquals(2, underTest.size)
     }
 
 
@@ -78,21 +77,21 @@ class ImmutableCollectionTest {
     fun getSize() {
         val underTest = ImmutableCollection(SetTestData)
 
-        underTest.shouldHaveSize(CountElements)
+        assertEquals(CountElements, underTest.size)
     }
 
     @Test
     fun isEmpty() {
         val underTest = ImmutableCollection(emptySet<String>())
 
-        underTest.isEmpty().shouldBeTrue()
+        assertTrue(underTest.isEmpty())
     }
 
     @Test
     fun isNotEmpty() {
         val underTest = ImmutableCollection(SetTestData)
 
-        underTest.isNotEmpty().shouldBeTrue()
+        assertTrue(underTest.isNotEmpty())
     }
 
     @Test
@@ -100,7 +99,7 @@ class ImmutableCollectionTest {
         val underTest = ImmutableCollection(SetTestData)
 
         forAllElements { index ->
-            underTest.indexOf(index.toString()).shouldBe(index)
+            assertEquals(index, underTest.indexOf(index.toString()))
         }
     }
 
@@ -109,7 +108,7 @@ class ImmutableCollectionTest {
         val underTest = ImmutableCollection(SetTestData)
 
         forAllElements { index ->
-            underTest.contains(index.toString()).shouldBeTrue()
+            assertTrue(underTest.contains(index.toString()))
         }
     }
 
@@ -117,7 +116,7 @@ class ImmutableCollectionTest {
     fun containsAll() {
         val underTest = ImmutableCollection(SetTestData)
 
-        underTest.containsAll(SetTestData).shouldBeTrue()
+        assertTrue(underTest.containsAll(SetTestData))
     }
 
 }

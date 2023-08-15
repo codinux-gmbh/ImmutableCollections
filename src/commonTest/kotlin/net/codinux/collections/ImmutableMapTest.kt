@@ -1,16 +1,9 @@
 package net.codinux.collections
 
-import io.kotest.assertions.throwables.shouldThrowAny
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.collections.shouldContainAll
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.maps.shouldHaveSize
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeInstanceOf
 import net.codinux.collections.CollectionsTestData.CountElements
 import net.codinux.collections.CollectionsTestData.MapTestData
 import net.codinux.collections.CollectionsTestData.forAllElements
-import kotlin.test.Test
+import kotlin.test.*
 
 class ImmutableMapTest {
 
@@ -18,7 +11,7 @@ class ImmutableMapTest {
     fun isImmutable() {
         val underTest = ImmutableMap("one" to "two")
 
-        shouldThrowAny {
+        assertFails {
             underTest as MutableMap<String, String>
         }
     }
@@ -30,8 +23,8 @@ class ImmutableMapTest {
         val result = underTest.toMutableMap()
         result.put("three", "four")
 
-        result.shouldHaveSize(2)
-        underTest.shouldHaveSize(1)
+        assertEquals(2, result.size)
+        assertEquals(1, underTest.size)
     }
 
     @Test
@@ -39,13 +32,13 @@ class ImmutableMapTest {
         val source = mutableListOf("one" to "two")
         val underTest = ImmutableMap(source)
 
-        source.shouldHaveSize(1)
-        underTest.shouldHaveSize(1)
+        assertEquals(1, source.size)
+        assertEquals(1, underTest.size)
 
         source.add("three" to "four")
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(1)
+        assertEquals(2, source.size)
+        assertEquals(1, underTest.size)
     }
 
     @Test
@@ -53,13 +46,13 @@ class ImmutableMapTest {
         val source = mutableMapOf("one" to "two")
         val underTest = ImmutableMap(source)
 
-        source.shouldHaveSize(1)
-        underTest.shouldHaveSize(1)
+        assertEquals(1, source.size)
+        assertEquals(1, underTest.size)
 
         source.put("three", "four")
 
-        source.shouldHaveSize(2)
-        underTest.shouldHaveSize(1)
+        assertEquals(2, source.size)
+        assertEquals(1, underTest.size)
     }
 
     @Test
@@ -68,8 +61,8 @@ class ImmutableMapTest {
 
         val result = source.toImmutableMap()
 
-        result.shouldBeInstanceOf<ImmutableMap<String, String>>()
-        result.shouldHaveSize(1)
+        assertIs<ImmutableMap<String, String>>(result)
+        assertEquals(1, result.size)
     }
 
     @Test
@@ -78,7 +71,8 @@ class ImmutableMapTest {
 
         val result = source.toImmutableMap()
 
-        result.shouldHaveSize(1)
+        assertIs<ImmutableMap<String, String>>(result)
+        assertEquals(1, result.size)
     }
 
     @Test
@@ -87,7 +81,8 @@ class ImmutableMapTest {
 
         val result = source.toImmutableMap()
 
-        result.shouldHaveSize(2)
+        assertIs<ImmutableMap<String, String>>(result)
+        assertEquals(2, result.size)
     }
 
     @Test
@@ -96,16 +91,16 @@ class ImmutableMapTest {
 
         val result = immutableMapOf(source)
 
-        result.shouldBeInstanceOf<ImmutableMap<String, String>>()
-        result.shouldHaveSize(1)
+        assertIs<ImmutableMap<String, String>>(result)
+        assertEquals(1, result.size)
     }
 
     @Test
     fun immutableMapOf_Vararg() {
         val result = immutableMapOf("one" to "two", "three" to "four")
 
-        result.shouldBeInstanceOf<ImmutableMap<String, String>>()
-        result.shouldHaveSize(2)
+        assertIs<ImmutableMap<String, String>>(result)
+        assertEquals(2, result.size)
     }
 
 
@@ -113,35 +108,35 @@ class ImmutableMapTest {
     fun getSize() {
         val underTest = ImmutableMap(MapTestData)
 
-        underTest.shouldHaveSize(CountElements)
+        assertEquals(CountElements, underTest.size)
     }
 
     @Test
     fun isEmpty() {
         val underTest = ImmutableMap(emptyMap<String, String>())
 
-        underTest.isEmpty().shouldBeTrue()
+        assertTrue(underTest.isEmpty())
     }
 
     @Test
     fun isNotEmpty() {
         val underTest = ImmutableMap(MapTestData)
 
-        underTest.isNotEmpty().shouldBeTrue()
+        assertTrue(underTest.isNotEmpty())
     }
 
     @Test
     fun keys() {
         val underTest = ImmutableMap(MapTestData)
 
-        underTest.keys.shouldContainAll(0, 1 ,2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+        assertContentEquals(listOf(0, 1 ,2, 3, 4, 5, 6, 7, 8, 9, 10, 11), underTest.keys)
     }
 
     @Test
     fun values() {
         val underTest = ImmutableMap(MapTestData)
 
-        underTest.values.shouldContainAll("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
+        assertContentEquals(listOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"), underTest.values)
     }
 
     @Test
@@ -149,7 +144,7 @@ class ImmutableMapTest {
         val underTest = ImmutableMap(MapTestData)
 
         forAllElements { index ->
-            underTest.get(index).shouldBe(index.toString())
+            assertEquals(index.toString(), underTest[index])
         }
     }
 
@@ -158,7 +153,7 @@ class ImmutableMapTest {
         val underTest = ImmutableMap(MapTestData)
 
         forAllElements { index ->
-            underTest.containsKey(index).shouldBeTrue()
+            assertTrue(underTest.containsKey(index))
         }
     }
 
@@ -167,7 +162,7 @@ class ImmutableMapTest {
         val underTest = ImmutableMap(MapTestData)
 
         forAllElements { index ->
-            underTest.containsValue(index.toString()).shouldBeTrue()
+            assertTrue(underTest.containsValue(index.toString()))
         }
     }
 
