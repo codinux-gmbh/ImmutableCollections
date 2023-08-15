@@ -15,6 +15,7 @@ class ImmutableCollectionTest {
         val underTest = ImmutableCollection("one", "two")
 
         assertFails {
+            @Suppress("UNCHECKED_CAST")
             underTest as MutableList<String>
         }
     }

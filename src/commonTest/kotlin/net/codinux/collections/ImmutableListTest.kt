@@ -12,6 +12,7 @@ class ImmutableListTest {
         val underTest = ImmutableList("one", "two")
 
         assertFails {
+            @Suppress("UNCHECKED_CAST")
             underTest as MutableList<String>
         }
     }

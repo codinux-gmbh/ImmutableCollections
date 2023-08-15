@@ -12,6 +12,7 @@ class ImmutableMapTest {
         val underTest = ImmutableMap("one" to "two")
 
         assertFails {
+            @Suppress("UNCHECKED_CAST")
             underTest as MutableMap<String, String>
         }
     }

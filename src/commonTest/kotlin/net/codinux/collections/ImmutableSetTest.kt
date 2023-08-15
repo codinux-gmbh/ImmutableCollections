@@ -12,6 +12,7 @@ class ImmutableSetTest {
         val underTest = ImmutableSet("one", "two")
 
         assertFails {
+            @Suppress("UNCHECKED_CAST")
             underTest as MutableSet<String>
         }
     }
