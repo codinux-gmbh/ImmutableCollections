@@ -80,4 +80,4 @@ kotlin {
 ext["projectDescription"] = "Immutable Collections implementations for Kotlin (Multiplatform) like ImmutableList, ImmutableMap, ..."
 ext["sourceCodeRepositoryBaseUrl"] = "github.com/codinux-gmbh/ImmutableCollections"
 
-apply(from = File("GradleScripts", "publish-codinux.gradle.kts"))
+apply(from = File(File("gradle", "scripts"), "publish-codinux.gradle.kts"))
