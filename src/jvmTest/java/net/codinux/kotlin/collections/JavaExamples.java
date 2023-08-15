@@ -14,26 +14,36 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class JavaExamples {
 
     @Test
-    public void showUsageInJava() {
-        List<String> listViaConstructor = new ImmutableList<>("one", "two");
-        List<String> listViaExtensionMethod = immutableListOf("one", "two");
+    public void immutableList() {
+        List<String> listViaConstructor = new ImmutableList<>("foo", "bar");
+        List<String> listViaGlobalMethod = immutableListOf("foo", "bar");
 
         assertEquals(2, listViaConstructor.size());
 
-        Map<String, String> mapViaConstructor = new ImmutableMap<>(Collections.singletonMap("one", "two")); // TODO: why does the vararg Pair<K, V> constructor not work her?
-        Map<String, String> mapViaExtensionMethod = immutableMapOf(Collections.singletonMap("one", "two"));
+        // all Collections are immutable, mutable operations are not supported
+        assertThrows(UnsupportedOperationException.class, () -> listViaConstructor.add("baz"));
+    }
+
+    @Test
+    public void immutableMap() {
+        Map<String, String> mapViaConstructor = new ImmutableMap<>(Collections.singletonMap("foo", "bar")); // TODO: why does the vararg Pair<K, V> constructor not work her?
+        Map<String, String> mapViaGlobalMethod = immutableMapOf(Collections.singletonMap("foo", "bar"));
 
         assertEquals(1, mapViaConstructor.size());
 
-        Set<String> setViaConstructor = new ImmutableSet<>("one", "two");
-        Set<String> setViaExtensionMethod = immutableSetOf("one", "two");
+        // all Collections are immutable, mutable operations are not supported
+        assertThrows(UnsupportedOperationException.class, () -> mapViaConstructor.put("baz", "foo-bar"));
+    }
+
+    @Test
+    public void immutableSet() {
+        Set<String> setViaConstructor = new ImmutableSet<>("foo", "bar");
+        Set<String> setViaGlobalMethod = immutableSetOf("foo", "bar");
 
         assertEquals(2, setViaConstructor.size());
 
         // all Collections are immutable, mutable operations are not supported
-        assertThrows(UnsupportedOperationException.class, () -> listViaConstructor.add("three"));
-        assertThrows(UnsupportedOperationException.class, () -> mapViaConstructor.put("three", "four"));
-        assertThrows(UnsupportedOperationException.class, () -> setViaConstructor.add("three"));
+        assertThrows(UnsupportedOperationException.class, () -> setViaConstructor.add("baz"));
     }
 
 }
