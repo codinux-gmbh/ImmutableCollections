@@ -1,0 +1,3 @@
+[submodule "GradleScripts"]
+	path = GradleScripts
+	url = git@github.com:dankito/GradleScripts
