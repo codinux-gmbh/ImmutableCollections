@@ -77,6 +77,7 @@ kotlin {
 }
 
 
+ext["customArtifactId"] = "immutable-collections"
 ext["projectDescription"] = "Immutable Collections implementations for Kotlin (Multiplatform) like ImmutableList, ImmutableMap, ..."
 ext["sourceCodeRepositoryBaseUrl"] = "github.com/codinux-gmbh/ImmutableCollections"
 

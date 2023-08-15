@@ -1,3 +1,3 @@
 
-rootProject.name = "immutable-collections"
+rootProject.name = "ImmutableCollections"
 
