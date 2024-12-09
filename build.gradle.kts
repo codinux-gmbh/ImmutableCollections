@@ -1,5 +1,10 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
+
 plugins {
-    kotlin("multiplatform") version "1.8.22"
+    kotlin("multiplatform") version "1.9.25"
 }
 
 group = "net.codinux.collections"
@@ -10,11 +15,9 @@ repositories {
 }
 
 kotlin {
-    // Enable the default target hierarchy:
-    targetHierarchy.default()
+    jvmToolchain(8)
 
     jvm {
-        jvmToolchain(8)
         withJava()
 
         testRuns["test"].executionTask.configure {
@@ -22,39 +25,59 @@ kotlin {
         }
     }
 
-    js(BOTH) {
-        //binaries.executable()
+    js(IR) {
+        moduleName = "immutable-collections"
+        binaries.executable()
 
         browser {
-            commonWebpackConfig {
-                cssSupport {
-                    enabled.set(true)
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useFirefoxHeadless()
                 }
             }
         }
 
+
         nodejs()
     }
 
-    wasm {
-        // To build distributions for and run tests on browser, Node.js or d8 use one:
-//        browser() // Browser and Node.js produce error: The top-level-await experiment is not enabled (set experiments.topLevelAwait: true to enabled it)
-//        nodejs()
-        d8()
+    wasmJs {
+        browser {
+            commonWebpackConfig {
+                experiments.add("topLevelAwait")
+            }
+
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useFirefoxHeadless()
+                }
+            }
+
+            // Uncomment the next line to apply Binaryen and get optimized wasm binaries
+            applyBinaryen()
+        }
+
+        //nodejs() // WASM Node.js does currently not work
     }
 
 
     linuxX64()
     mingwX64()
 
-    ios()
+
+    iosX64()
+    iosArm64()
     iosSimulatorArm64()
     macosX64()
     macosArm64()
-    watchos()
+    watchosArm64()
     watchosSimulatorArm64()
-    tvos()
+    tvosArm64()
     tvosSimulatorArm64()
+
+    applyDefaultHierarchyTemplate()
 
     
     sourceSets {
